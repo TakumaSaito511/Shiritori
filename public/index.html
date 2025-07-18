@@ -16,7 +16,7 @@
     <p id="previousWord"></p>
     <!-- 次の文字を入力するフォーム -->
     <input id="nextWordInput" type="text" />
-    <button id="nextWordSendButton">送信</button>
+    <button id="nextWordSendButton">Enter</button>
 
     <!-- JavaScriptを実行 -->
     <script>
@@ -48,11 +48,17 @@
                     body: JSON.stringify({ nextWord: nextWordInputText })
                 }
             );
-            // status: 200以外が返ってきた場合にエラーを表示
-            if (response.status !== 200) {
+            // status: 400(単語が続いていないとき)のエラー表示
+            if (response.status === 400) {
                 const errorJson = await response.text();
                 const errorObj = JSON.parse(errorJson);
-                alert(errorObj["errorMessage"]);
+                alert(errorObj["errorMessage1"]);
+            }
+            // status: 403(「ん」がついたとき)のエラー表示
+            else if (response.status === 403) {
+                const errorJson = await response.text();
+                const errorObj = JSON.parse(errorJson);
+                alert(errorObj["errorMessage2"]);
             }
 
             const previousWord = await response.text();

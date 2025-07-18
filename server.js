@@ -1,4 +1,5 @@
 // server.js
+import { join } from "jsr:@std/path@^1.1.1/join";
 import { serveDir } from "jsr:@std/http/file-server";
 
 // 直前の単語を保持しておく
@@ -31,11 +32,27 @@ Deno.serve(async (_req) => {
         else {
             return new Response(
                 JSON.stringify({
-                    "errorMessage": "前の単語に続いていません",
+                    "errorMessage1": "前の単語に続いていません",
                     "errorCode": "10001",
                 }),
                 {
                     status: 400,
+                    headers: {
+                        "Content-Type": "application/json; charset=utf-8",
+                    },
+                },
+            );
+        }
+
+        //「ん」がついたらゲーム終了
+        if (nextWord.slice(-1) === "ん") {
+            return new Response(
+                JSON.stringify({
+                    "errorMessage2": "「ん」ついたから負け乙",
+                    "errorCode": "10002",
+                }),
+                {
+                    status: 403,
                     headers: {
                         "Content-Type": "application/json; charset=utf-8",
                     },
