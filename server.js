@@ -1,9 +1,9 @@
 // server.js
-import { join } from "jsr:@std/path@^1.1.1/join";
 import { serveDir } from "jsr:@std/http/file-server";
 
 // 直前の単語を保持しておく
 let previousWord = "しりとり";
+let usedWords = [previousWord];
 
 // localhostにDenoのHTTPサーバーを展開
 Deno.serve(async (_req) => {
@@ -24,15 +24,36 @@ Deno.serve(async (_req) => {
         // JSONの中からnextWordを取得
         const nextWord = requestJson["nextWord"];
 
+        //「ん」がついたらゲーム終了
+        if (nextWord.slice(-1) === "ん") {
+            return new Response(null, {
+                status: 403,
+                headers: {
+                    "Content-Type": "application/json; charset=utf-8",
+                },
+            });
+        }
+
+        //すでに使われた単語
+        if (usedWords.includes(nextWord)) {
+            return new Response(null, {
+                status: 409,
+                headers: {
+                    "Content-Type": "application/json; charset=utf-8",
+                },
+            });
+        }
+
         // previousWordの末尾とnextWordの先頭が同一か確認
         if (previousWord.slice(-1) === nextWord.slice(0, 1)) {
             // 同一であれば、previousWordを更新
             previousWord = nextWord;
+            usedWords.push(nextWord);
         } // 同一でない単語の入力時に、エラーを返す
         else {
             return new Response(
                 JSON.stringify({
-                    "errorMessage1": "前の単語に続いていません",
+                    "errorMessage": "前の単語に続いていません",
                     "errorCode": "10001",
                 }),
                 {
@@ -43,23 +64,6 @@ Deno.serve(async (_req) => {
                 },
             );
         }
-
-        //「ん」がついたらゲーム終了
-        if (nextWord.slice(-1) === "ん") {
-            return new Response(
-                JSON.stringify({
-                    "errorMessage2": "「ん」ついたから負け乙",
-                    "errorCode": "10002",
-                }),
-                {
-                    status: 403,
-                    headers: {
-                        "Content-Type": "application/json; charset=utf-8",
-                    },
-                },
-            );
-        }
-
         // 現在の単語を返す
         return new Response(previousWord);
     }

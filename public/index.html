@@ -52,13 +52,15 @@
             if (response.status === 400) {
                 const errorJson = await response.text();
                 const errorObj = JSON.parse(errorJson);
-                alert(errorObj["errorMessage1"]);
+                alert(errorObj["errorMessage"]);
             }
-            // status: 403(「ん」がついたとき)のエラー表示
+            // status: 403(「ん」がついたとき)
             else if (response.status === 403) {
-                const errorJson = await response.text();
-                const errorObj = JSON.parse(errorJson);
-                alert(errorObj["errorMessage2"]);
+                window.location.href = "/gameover.html";
+            }
+            // status: 409(同じ言葉使ったから負け)
+            else if (response.status === 409) {
+                window.location.href = "/gameover2.html";
             }
 
             const previousWord = await response.text();
