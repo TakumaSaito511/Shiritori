@@ -11,12 +11,13 @@
 
 <body>
     <!-- bodyタグの中には実際に表示するものなどを書く -->
-    <h1>しりとり</h1>
+    <h1>しりとりげえむ</h1>
     <!-- 現在の単語を表示する場所 -->
     <p id="previousWord"></p>
     <!-- 次の文字を入力するフォーム -->
     <input id="nextWordInput" type="text" />
-    <button id="nextWordSendButton">Enter</button>
+    <button id="nextWordSendButton">つぎへ</button>
+    <button id="resetButton">はじめから</button>
 
     <!-- JavaScriptを実行 -->
     <script>
@@ -72,6 +73,11 @@
             // inputタグの中身を消去する
             nextWordInput.value = "";
         }
+
+        document.querySelector("#resetButton").onclick = async () => {
+            await fetch("/reset", { method: "POST" });
+            location.href = "/";
+        };
     </script>
 </body>
 

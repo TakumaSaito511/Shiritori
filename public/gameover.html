@@ -31,9 +31,17 @@
 </head>
 
 <body>
-  <h1>ゲームオーバー！</h1>
-  <p>「ん」がついたため、ゲームは終了しました。</p>
-  <button onclick="window.location.href = '/'">もう一度遊ぶ</button>
+  <h1>げーむおーばー！</h1>
+  <p>「ん」がついたからまけだよ。つぎはがんばろう！</p>
+  <button id="resetButton">もういちどあそぶ</button>
+
+  <script>
+    document.querySelector("#resetButton").onclick = async () => {
+      await fetch("/reset", { method: "POST" });
+      window.location.href = "/";
+    };
+  </script>
+
 </body>
 
 </html>
