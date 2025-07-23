@@ -31,6 +31,7 @@ BGMがあると楽しいと考え、BGMを使いした。コードはCopilotを�
 以下のコードで実行できる。
 ```Bash
 git clone https://github.com/TakumaSaito511/Shiritori.git
+cd Shiritori
 deno run --allow-net --allow-read server.js
 ```
 
