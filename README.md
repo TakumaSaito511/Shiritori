@@ -28,7 +28,7 @@ BGMがあると楽しいと考え、BGMを使いした。コードはCopilotを�
 
 実行方法
 ---
-以下のコードで実行できる。
+以下のコードで出てきたURLから実行できる。
 ```Bash
 git clone https://github.com/TakumaSaito511/Shiritori.git
 cd Shiritori
