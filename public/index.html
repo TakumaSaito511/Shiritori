@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja">
+<audio id="bgm" src="BGM.mp3" autoplay loop></audio>
+
 
 <head>
     <!-- headタグの中にはメタデータ等を記載する -->
@@ -11,7 +13,7 @@
 
 <body>
     <!-- bodyタグの中には実際に表示するものなどを書く -->
-    <h1>しりとりげえむ</h1>
+    <h1>しりとりげ～む</h1>
     <!-- 現在の単語を表示する場所 -->
     <p id="previousWord"></p>
     <!-- 次の文字を入力するフォーム -->
@@ -21,6 +23,13 @@
 
     <!-- JavaScriptを実行 -->
     <script>
+
+        const bgm = document.getElementById("bgm");
+        document.onclick = () => {
+            bgm.play(); // ユーザーがクリックしたらBGM開始
+        }
+        bgm.volume = 0.1; // 音量調整（0.0〜1.0）
+
         window.onload = async (event) => {
 
             // GET /shiritoriを実行

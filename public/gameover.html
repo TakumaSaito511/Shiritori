@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+<audio id="bgm" src="GAMEOVER.mp3" autoplay loop></audio>
 
 <head>
   <meta charset="UTF-8">
@@ -31,11 +32,14 @@
 </head>
 
 <body>
-  <h1>げーむおーばー！</h1>
+  <h1>げ～むお～ば～</h1>
   <p>「ん」がついたからまけだよ。つぎはがんばろう！</p>
   <button id="resetButton">もういちどあそぶ</button>
 
   <script>
+    bgm.volume = 0.1; // 音量調整（0.0〜1.0）
+
+
     document.querySelector("#resetButton").onclick = async () => {
       await fetch("/reset", { method: "POST" });
       window.location.href = "/";
